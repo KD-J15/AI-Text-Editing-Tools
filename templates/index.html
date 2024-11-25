@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>AI校正ツール</title>
+</head>
+<body>
+    <h1>AI校正ツール</h1>
+    <label for="inputText">校正したい文章入力</label>
+    <textarea id="inputText"></textarea>
+    
+    <label for="correctedText">校正した文章</label>
+    <textarea id="correctedText" readonly></textarea>
+    
+    <div class="buttons">
+        <button onclick="correctText()">検査</button>
+        <button onclick="resetText()">リセット</button>
+    </div>
+
+    <script>
+        function correctText() {
+            const inputText = document.getElementById('inputText').value;
+
+            fetch('/correct', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: inputText })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.corrected_text) {
+                    document.getElementById('correctedText').value = data.corrected_text;
+                } else if (data.error) {
+                    alert("エラーが発生しました: " + data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function resetText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('correctedText').value = '';
+        }
+    </script>
+</body>
+</html>

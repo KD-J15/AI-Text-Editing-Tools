@@ -1,1 +1,1 @@
-# AI-Text-Editing-Tools
+# AI文章校正支援ツール  
