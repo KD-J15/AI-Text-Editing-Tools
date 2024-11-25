@@ -21,8 +21,8 @@ def correct():
     data = request.json
     text_to_correct = data.get("text", "")
     
-    # 文章校正のためのプロンプト（統合版）
-    prompt = f"""
+    # システムプロンプトに校正の観点を記載する
+    system_prompt = """
     以下の文章について、以下の観点で校正を行い、必要に応じて修正してください。
 
     1. 文法エラーの指摘と修正  
@@ -30,10 +30,7 @@ def correct():
     3. スペルミスの修正  
     4. 論理の飛躍や整合性の欠如の指摘と修正案の提示  
     5. 読みやすさ向上のための文の構造や表現の改善  
-    6. 指定されたテーマや文脈に適しているかの確認と必要な修正  
-
-    【文章】  
-    {text_to_correct}
+    6. 指定されたテーマや文脈に適しているかの確認と必要な修正
     """
 
     try:
@@ -41,12 +38,13 @@ def correct():
         completion = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": text_to_correct}
             ]
         )
         
-        corrected_text = completion.choices[0].message['content']
+        # 修正されたテキストを取得
+        corrected_text = completion.choices[0]['message']['content']
         return jsonify({"corrected_text": corrected_text})
 
     except Exception as e:
