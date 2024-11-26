@@ -1,54 +1,71 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
-# 環境変数を読み込む
-load_dotenv()
-
+# Flaskアプリの初期化
 app = Flask(__name__)
 
-# OpenAI APIのクライアントを作成
+# .env ファイルの内容を読み込む
+load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    raise ValueError("OPENAI_API_KEY is not set in the .env file.")
+
 client = OpenAI(api_key=api_key)
 
+PRESET_PROMPTS = {
+    "friend": "以下の文章を友人に送るメッセージとして、適切なカジュアルな形式に校正してください。",
+    "relative": "以下の文章を親戚に送るメッセージとして、適切な丁寧な形式に校正してください。",
+    "boss": "以下の文章を上司に送るメールとして、適切で礼儀正しい形式に校正してください。"
+}
+
+def proofread_text(input_text, preset, recipient):
+    """
+    校正を行うための関数
+    :param input_text: 校正対象の文章
+    :param preset: 使用するプロンプトのプリセット
+    :param recipient: 送信相手の指定
+    :return: 校正結果
+    """
+    if preset not in PRESET_PROMPTS:
+        raise ValueError("Invalid preset selected.")
+
+    system_prompt = f"送信相手: {recipient}\n{PRESET_PROMPTS[preset]}"
+
+    response = client.chat.completions.create(model="gpt-4o",
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": input_text}
+    ],
+    temperature=0.7)
+
+    # 校正結果を抽出
+    proofread_result = response.choices[0].message.content
+    return proofread_result
+
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
-@app.route('/correct', methods=['POST'])
-def correct():
-    data = request.json
-    text_to_correct = data.get("text", "")
-    
-    # システムプロンプトに校正の観点を記載する
-    system_prompt = """
-    以下の文章について、以下の観点で校正を行い、必要に応じて修正してください。
-
-    1. 文法エラーの指摘と修正  
-    2. 不適切な表現の改善  
-    3. スペルミスの修正  
-    4. 論理の飛躍や整合性の欠如の指摘と修正案の提示  
-    5. 読みやすさ向上のための文の構造や表現の改善  
-    6. 指定されたテーマや文脈に適しているかの確認と必要な修正
+@app.route('/proofread', methods=['POST'])
+def proofread_endpoint():
     """
+    校正エンドポイント
+    """
+    data = request.get_json()
+    if not data or 'text' not in data or 'preset' not in data or 'recipient' not in data:
+        return jsonify({"error": "Invalid input. Please provide 'text', 'preset', and 'recipient' in JSON format."}), 400
 
+    input_text = data['text']
+    preset = data['preset']
+    recipient = data['recipient']
     try:
-        # GPT-4oモデルを使って文章を校正
-        completion = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": text_to_correct}
-            ]
-        )
-        
-        # 修正されたテキストを取得
-        corrected_text = completion.choices[0]['message']['content']
-        return jsonify({"corrected_text": corrected_text})
-
+        result = proofread_text(input_text, preset, recipient)
+        return jsonify({"result": result})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(port=5000)
+if __name__ == "__main__":
+    app.run(debug=True)

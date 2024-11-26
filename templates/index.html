@@ -3,48 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>AI校正ツール</title>
+    <title>文章校正AIツール</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>AI校正ツール</h1>
-    <label for="inputText">校正したい文章入力</label>
-    <textarea id="inputText"></textarea>
-    
-    <label for="correctedText">校正した文章</label>
-    <textarea id="correctedText" readonly></textarea>
-    
-    <div class="buttons">
-        <button onclick="correctText()">検査</button>
-        <button onclick="resetText()">リセット</button>
+    <div class="container">
+        <h1>文章校正AIツール</h1>
+        <form id="proofread-form">
+            <div class="input-section">
+                <label for="recipient">送信相手</label>
+                <input type="text" id="recipient" name="recipient" placeholder="例: 友人、親戚、上司">
+            </div>
+
+            <textarea id="input-text" name="input-text" rows="5" placeholder="ここに校正したい文章を入力してください"></textarea>
+
+            <label for="output-text">校正した文章</label>
+            <textarea id="output-text" name="output-text" rows="5" readonly></textarea>
+
+            <div class="button-container">
+                <button type="button" id="proofread-btn">検査</button>
+                <button type="reset" id="reset-btn">リセット</button>
+            </div>
+        </form>
+
+        <aside class="side-menu">
+            <h2>プリセット</h2>
+            <ul>
+                <li data-preset="friend">友人</li>
+                <li data-preset="relative">親戚</li>
+                <li data-preset="boss">上司</li>
+            </ul>
+        </aside>
     </div>
-
-    <script>
-        function correctText() {
-            const inputText = document.getElementById('inputText').value;
-
-            fetch('/correct', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ text: inputText })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.corrected_text) {
-                    document.getElementById('correctedText').value = data.corrected_text;
-                } else if (data.error) {
-                    alert("エラーが発生しました: " + data.error);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-        function resetText() {
-            document.getElementById('inputText').value = '';
-            document.getElementById('correctedText').value = '';
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
