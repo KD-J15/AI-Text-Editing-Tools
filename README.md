@@ -22,8 +22,8 @@
 ## インストールと実行
 1. リポジトリをクローンします。
    ```bash
-   git clone https://github.com/your-repo/ai-proofreading-tool.git
-   cd ai-proofreading-tool
+   git clone https://github.com/KD-J15/AI-Text-Editing-Tools.git
+   cd AI-Text-Editing-Tools
    ```
 2. 必要なライブラリをインストールします。
    ```bash
