@@ -3,4 +3,4 @@
 base.py
 .__pycache__
 *.pyc
-*.txt
+prompt.txt

@@ -37,8 +37,7 @@ def proofread_text(input_text, preset, recipient):
     if preset not in PRESET_PROMPTS:
         raise ValueError("Invalid preset selected.")
 
-    system_prompt = f"送信相手: {recipient}\n{PRESET_PROMPTS[preset]}""また、以下のように校正箇所とその理由を簡潔に説明してください:\n""- 修正箇所と修正理由: 文法エラーの修正、不適切な表現の改善など。"""
-    
+    system_prompt = f"送信相手: {recipient}\n{PRESET_PROMPTS[preset]}"
 
     response = client.chat.completions.create(model="gpt-4o",
     messages=[
