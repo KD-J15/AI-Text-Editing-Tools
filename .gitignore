@@ -1,6 +1,0 @@
-# 環境変数ファイルを除外
-.env
-base.py
-.__pycache__
-*.pyc
-*.txt
