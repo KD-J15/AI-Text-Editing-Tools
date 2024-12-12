@@ -29,7 +29,7 @@ def proofread_text(input_text, preset, recipient):
     :param input_text: 校正対象の文章
     :param preset: 使用するプロンプトのプリセット
     :param recipient: 送信相手の指定
-    :return: 校正結果
+    :return: 校正結果と修正点
     """
     if len(input_text) > CHARACTER_LIMIT:
         raise ValueError(f"Input text exceeds the character limit of {CHARACTER_LIMIT}.")
@@ -37,18 +37,26 @@ def proofread_text(input_text, preset, recipient):
     if preset not in PRESET_PROMPTS:
         raise ValueError("Invalid preset selected.")
 
-    system_prompt = f"送信相手: {recipient}\n{PRESET_PROMPTS[preset]}"
+    system_prompt = (
+        f"送信相手: {recipient}\n"
+        f"{PRESET_PROMPTS[preset]}\n"
+        "また、以下のように修正箇所とその理由を簡潔に説明してください:\n"
+        "- 修正箇所と修正理由: 文法エラーの修正、不適切な表現の改善など。"
+    )
 
-    response = client.chat.completions.create(model="gpt-4o",
-    messages=[
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": input_text}
-    ],
-    temperature=0.7)
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": input_text}
+        ],
+        temperature=0.7
+    )
 
-    # 校正結果を抽出
+    # 校正結果と修正点を抽出
     proofread_result = response.choices[0].message.content
-    return proofread_result
+    corrections = "修正箇所: 以下のように修正しました\n" + proofread_result
+    return proofread_result, corrections
 
 @app.route('/')
 def home():
@@ -67,10 +75,10 @@ def proofread_endpoint():
     preset = data['preset']
     recipient = data['recipient']
     try:
-        result = proofread_text(input_text, preset, recipient)
-        return jsonify({"result": result})
+        result, corrections = proofread_text(input_text, preset, recipient)
+        return jsonify({"result": result, "corrections": corrections})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
