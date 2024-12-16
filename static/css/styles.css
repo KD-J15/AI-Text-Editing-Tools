@@ -1,124 +1,108 @@
-/* 手書き風フォントの適用 */
+/* ベーススタイル */
 body {
     font-family: 'Dancing Script', cursive;
-    background: linear-gradient(135deg, #f7f7f7, #d0dce3); /* グラデーションを追加 */
+    background: linear-gradient(135deg, #f7f7f7, #d0dce3);
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto; /* 修正: 自動調整 */
-    overflow-y: auto; /* 修正: スクロールを有効化 */
+    min-height: 100vh; /* コンテンツが中央揃え */
 }
 
-/* タイトルのスタイル */
 h1 {
     text-align: center;
-    font-size: 2.5em; /* サイズを調整 */
-    margin-bottom: 5px;
+    font-size: 2.5em;
+    margin-bottom: 15px;
     color: #333;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 軽い影を追加して視覚的に際立たせる */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* プルダウンメニューのスタイル */
-select {
-    width: 13.5vw; /* 修正: 正しい単位 */
-    padding: 10px;
-    border: 2px solid #666;
+/* コンテナ */
+.container {
+    width: 90%;
+    max-width: 600px;
+    background: #ffffff;
+    padding: 20px 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+/* セレクトメニュー */
+select {
+    width: 100%;
+    padding: 10px;
     font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
-    color: #333;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: box-shadow 0.2s;
 }
 
 select:focus {
-    border-color: #444;
     outline: none;
-    box-shadow: 0 0 10px rgba(85, 85, 85, 0.3);
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
 }
 
-/* テキストエリアのスタイル */
+/* テキストエリア */
 textarea {
-    width: 85vw;
+    width: 100%;
     padding: 10px;
-    border-radius: 8px;
-    background-color: #fff;
-    border: 2px solid #666;
     font-size: 1em;
-    color: #333;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
     resize: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 textarea:focus {
-    border-color: #444;
     outline: none;
-    box-shadow: 0 0 10px rgba(85, 85, 85, 0.3);
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
 }
 
-/* 校正する文章と校正した文章の間にマージン */
-.output-section {
-    margin-top: 20px;
+/* ラベル */
+label {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
 }
 
-#input-text {
-    height: 15vh;
-}
-
-#output-text {
-    height: 30vh;
-}
-
-/* ボタンコンテナのスタイル */
+/* ボタン */
 .button-container {
     display: flex;
-    justify-content: center; /* ボタンを中央揃え */
-    width: 80vw;
-    margin-top: 10px;
-    gap: 40px; /* ボタン間のスペースを調整 */
+    justify-content: space-between;
 }
 
-/* ボタンスタイル */
 button {
-    padding: 10px 150px;
+    padding: 10px 30px;
     border: none;
-    border-radius: 8px;
-    background-color: #2868d6;
+    border-radius: 5px;
+    font-size: 1.1em;
     color: white;
-    font-size: 1.2em;
     cursor: pointer;
-    margin: 3px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-    background-color: #3850ed;
+#proofread-btn {
+    background-color: #4a90e2;
+}
+
+#proofread-btn:hover {
+    background-color: #357ab8;
     transform: scale(1.05);
 }
 
-/* 検査ボタンのスタイル */
-button#proofread-btn {
-    background-color: #2868d6;
-}
-
-/* リセットボタンのスタイル */
-button#reset-btn {
+#reset-btn {
     background-color: #6c757d;
 }
 
-button#reset-btn:hover {
+#reset-btn:hover {
     background-color: #5a6268;
-}
-
-label {
-    position: relative; /* 修正: 絶対位置を解除 */
-    margin-top: 10px; /* 修正: 適切なマージン */
-    font-size: 1.2em;
-    color: #333;
+    transform: scale(1.05);
 }

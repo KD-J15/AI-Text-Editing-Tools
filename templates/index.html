@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReWrite</title>
-    <!-- Dancing Scriptフォントをインポート -->
+    <!-- フォントのインポート -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>ReWrite</h1>
         <form id="proofread-form">
+            <!-- 送信相手選択 -->
             <div class="input-section">
                 <select id="recipient" name="recipient">
                     <option value="" disabled selected>送信相手を選択</option>
@@ -20,23 +21,25 @@
                     <option value="client">取引先</option>
                 </select>
             </div>
-
+            
+            <!-- 入力テキストエリア -->
             <div class="input-section">
                 <textarea id="input-text" name="input-text" rows="5" placeholder="ここに校正したい文章を入力してください"></textarea>
             </div>
 
+            <!-- 校正済みテキストエリア -->
             <div class="output-section">
                 <label for="output-text">校正した文章</label>
                 <textarea id="output-text" name="output-text" rows="5" readonly></textarea>
             </div>
 
+            <!-- ボタン -->
             <div class="button-container">
                 <button type="button" id="proofread-btn">検査</button>
                 <button type="reset" id="reset-btn">リセット</button>
             </div>
         </form>
     </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="script.js"></script>
 </body>
-</html>
 </html>
