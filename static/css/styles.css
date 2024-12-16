@@ -8,8 +8,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: hidden; /* スクロールを無効に */
+    height: auto; /* 修正: 自動調整 */
+    overflow-y: auto; /* 修正: スクロールを有効化 */
 }
 
 /* タイトルのスタイル */
@@ -23,7 +23,7 @@ h1 {
 
 /* プルダウンメニューのスタイル */
 select {
-    width: 13.5Svw;
+    width: 13.5vw; /* 修正: 正しい単位 */
     padding: 10px;
     border: 2px solid #666;
     border-radius: 8px;
@@ -74,7 +74,6 @@ textarea:focus {
     height: 30vh;
 }
 
-
 /* ボタンコンテナのスタイル */
 .button-container {
     display: flex;
@@ -117,11 +116,9 @@ button#reset-btn:hover {
     background-color: #5a6268;
 }
 
-
 label {
-    position: absolute;
-    left: 80px;
-    top: 242px;
+    position: relative; /* 修正: 絶対位置を解除 */
+    margin-top: 10px; /* 修正: 適切なマージン */
     font-size: 1.2em;
     color: #333;
 }
