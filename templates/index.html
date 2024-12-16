@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章校正</title>
+    <title>ReWrite</title>
+    <!-- Dancing Scriptフォントをインポート -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>文章校正</h1>
+        <h1>ReWrite</h1>
         <form id="proofread-form">
             <div class="input-section">
-                <label for="recipient">送信相手</label>
-                <input type="text" id="recipient" name="recipient" placeholder="例: 友人、親戚、上司">
+                <select id="recipient" name="recipient">
+                    <option value="" disabled selected>送信相手を選択</option>
+                    <option value="boss">上司</option>
+                    <option value="colleague">同僚</option>
+                    <option value="client">取引先</option>
+                </select>
             </div>
 
-            <textarea id="input-text" name="input-text" rows="5" placeholder="ここに校正したい文章を入力してください"></textarea>
+            <div class="input-section">
+                <textarea id="input-text" name="input-text" rows="5" placeholder="ここに校正したい文章を入力してください"></textarea>
+            </div>
 
-            <label for="output-text">校正した文章</label>
-            <textarea id="output-text" name="output-text" rows="5" readonly></textarea>
+            <div class="output-section">
+                <label for="output-text">校正した文章</label>
+                <textarea id="output-text" name="output-text" rows="5" readonly></textarea>
+            </div>
 
             <div class="button-container">
                 <button type="button" id="proofread-btn">検査</button>
                 <button type="reset" id="reset-btn">リセット</button>
             </div>
         </form>
-
-        <aside class="side-menu">
-            <h2>プリセット</h2>
-            <ul>
-                <li data-preset="friend">友人</li>
-                <li data-preset="relative">親戚</li>
-                <li data-preset="boss">上司</li>
-            </ul>
-        </aside>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
