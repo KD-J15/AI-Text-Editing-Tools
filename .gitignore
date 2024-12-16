@@ -4,3 +4,5 @@ base.py
 .__pycache__
 *.pyc
 prompt.txt
+security.txt
+robots.txt
