@@ -1,6 +1,6 @@
-/* 手書き風フォントの適用 */
+/* 手書き風フォントの適用（インポート不要） */
 body {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Comic Sans MS', 'Brush Script MT', cursive;
     background: linear-gradient(135deg, #f7f7f7, #d0dce3); /* グラデーションを追加 */
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@ h1 {
 
 /* プルダウンメニューのスタイル */
 select {
-    width: 13.5Svw;
+    width: 13.5vw;
     padding: 10px;
     border: 2px solid #666;
     border-radius: 8px;
@@ -74,7 +74,6 @@ textarea:focus {
     height: 30vh;
 }
 
-
 /* ボタンコンテナのスタイル */
 .button-container {
     display: flex;
@@ -117,11 +116,54 @@ button#reset-btn:hover {
     background-color: #5a6268;
 }
 
-
+/* ラベルのスタイル */
 label {
     position: absolute;
     left: 80px;
-    top: 242px;
+    top: 244px;
     font-size: 1.2em;
     color: #333;
+}
+
+/* メディアクエリを使用してレスポンシブ対応 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em; /* スマートフォン向けにタイトルサイズを調整 */
+    }
+
+    select, textarea, .button-container {
+        width: 90vw; /* デバイスの幅に合わせる */
+    }
+
+    button {
+        padding: 10px 50px; /* ボタンの幅を調整 */
+        font-size: 1em; /* ボタンのフォントサイズを縮小 */
+    }
+
+    label {
+        left: 20px; /* ラベルの位置を調整 */
+        top: 200px;
+        font-size: 1em; /* ラベルのフォントサイズを縮小 */
+    }
+}
+
+/* タブレット対応 */
+@media (max-width: 1024px) and (min-width: 769px) {
+    h1 {
+        font-size: 2.2em; /* タブレット向けにタイトルサイズを調整 */
+    }
+
+    select, textarea, .button-container {
+        width: 85vw;
+    }
+
+    button {
+        padding: 10px 100px; /* ボタンサイズを調整 */
+    }
+
+    label {
+        left: 50px; /* ラベル位置を調整 */
+        top: 220px;
+        font-size: 1.1em;
+    }
 }
