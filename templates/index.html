@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReWrite</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ReWrite</h1>
+        <form id="proofread-form">
+            <div class="input-section">
+                <select id="recipient" name="recipient">
+                    <option value="" disabled selected>送信相手を選択</option>
+                    <option value="boss">上司</option>
+                    <option value="colleague">同僚</option>
+                    <option value="client">取引先</option>
+                </select>
+            </div>
+
+            <div class="input-section">
+                <textarea id="input-text" name="input-text" rows="5" placeholder="ここに校正したい文章を入力してください"></textarea>
+            </div>
+
+            <div class="output-section">
+                <label for="output-text">校正した文章</label>
+                <textarea id="output-text" name="output-text" rows="5" readonly></textarea>
+            </div>
+
+            <div class="button-container">
+                <button type="button" id="proofread-btn">検査</button>
+                <button type="reset" id="reset-btn">リセット</button>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
