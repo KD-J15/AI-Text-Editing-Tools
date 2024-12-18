@@ -15,7 +15,7 @@ body {
 h1 {
     text-align: center;
     font-size: 2.5em; /* サイズを調整 */
-    margin-top: -10px; /* タイトルを上に移動 */
+    margin-top: -4px; /* タイトルを上に移動 */
     margin-bottom: 5px;
     color: #333;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 軽い影を追加して視覚的に際立たせる */
@@ -86,7 +86,8 @@ textarea:focus {
 
 /* ボタンスタイル */
 button {
-    padding: 10px 150px;
+    width: 400px; /* 幅を固定 */
+    padding: 10px; /* 上下のパディングのみ */
     border: none;
     border-radius: 8px;
     background-color: #2868d6;
@@ -117,6 +118,15 @@ button#reset-btn:hover {
     background-color: #5a6268;
 }
 
+/* Character count styles */
+.char-count {
+    font-size: 1em;
+    color: #333;
+    text-align: right;
+    margin-top: 1px;
+}
+
+
 /* ラベルのスタイル */
 label {
     display: block;  /* ブロック要素として扱い、行の幅を全て使う */
@@ -139,7 +149,8 @@ label {
     }
 
     button {
-        padding: 10px 50px; /* ボタンの幅を調整 */
+        width: 90vw; /* スマホ向けにボタンの幅を調整 */
+        padding: 10px; /* 上下のパディングのみ */
         font-size: 1em; /* ボタンのフォントサイズを縮小 */
     }
 

@@ -1,14 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 既存のコード
     const proofreadBtn = document.getElementById('proofread-btn');
-    const sideMenuItems = document.querySelectorAll('.side-menu ul li');
+    const inputText = document.getElementById('input-text');
+    const charCount = document.getElementById('char-count');
+    const maxChars = 1000;
+    const resetBtn = document.getElementById('reset-btn'); // リセットボタンを取得
 
-    // サイドメニュークリック時の動作
-    sideMenuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const recipientInput = document.getElementById('recipient');
-            recipientInput.value = item.textContent.trim();
-            recipientInput.dataset.preset = item.dataset.preset;
-        });
+    // リセットボタンの動作を定義
+    resetBtn.addEventListener('click', () => {
+        inputText.value = ''; // 入力欄をクリア
+        charCount.textContent = '0'; // 文字数を0にリセット
+    });
+
+    // 文字カウントのリアルタイム更新
+    inputText.addEventListener('input', function () {
+        const currentLength = inputText.value.length;
+        charCount.textContent = currentLength;
+
+        // 1000文字を超えた場合は文字を切り捨て
+        if (currentLength > maxChars) {
+            inputText.value = inputText.value.substring(0, maxChars);
+            charCount.textContent = maxChars;
+        }
     });
 
     proofreadBtn.addEventListener('click', async () => {
