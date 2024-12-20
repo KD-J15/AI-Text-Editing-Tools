@@ -144,8 +144,12 @@ label {
         font-size: 2em; /* スマートフォン向けにタイトルサイズを調整 */
     }
 
-    select, textarea, .button-container {
+    textarea, .button-container {
         width: 90vw; /* デバイスの幅に合わせる */
+    }
+
+    select{
+        width:40vw;
     }
 
     button {
