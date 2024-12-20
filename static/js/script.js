@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     proofreadBtn.addEventListener('click', async () => {
         const recipient = document.getElementById('recipient').value;
         const inputText = document.getElementById('input-text').value;
-        const preset = document.getElementById('recipient').dataset.preset || 'friend';
+        const preset = document.getElementById('recipient').value;
 
         if (!recipient.trim()) {
             alert('送信相手を指定してください。');
